@@ -47,7 +47,7 @@ public class WorkerController {
   public ResponseEntity add(@Valid @RequestBody Worker worker) {
     LOG.info("Saving worker");
     Worker w = service.add(worker);
-    return ResponseEntity.created(URI.create("/worker/" + w.getId())).build();
+    return ResponseEntity.created(URI.create("/workers/" + w.getId())).build();
   }
 
   @GetMapping("/{id}")
@@ -74,7 +74,7 @@ public class WorkerController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Worker> delete(@PathVariable String id) {
-    LOG.info("delete");
+    LOG.info("delete of {}", id);
     if(!service.get(id).isPresent()) {
       return ResponseEntity.notFound().build();
     }
