@@ -2,6 +2,11 @@ package com.example.springmongodbsimple.models;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,20 +15,30 @@ public class Worker {
 
   @Id
   private String id;
+
+  @NotBlank(message = "Nome obrigatório")
   private String name;
+
+  @NotBlank(message = "Sobrenome obrigatório")
   private String lastName;
+
+  @Past
   private LocalDate birthday;
+
+  @Email(message = "Email inválido")
   private String email;
-  private Role role = Role.BASIC;
+
+  @NotBlank(message = "Perfil obrigatório")
+  private String roleId;
 
   public Worker() {}
 
-  public Worker(String name, String lastName, LocalDate birthday, String email, Role role) {
+  public Worker(String name, String lastName, LocalDate birthday, String email, String roleId) {
     this.name = name;
     this.lastName = lastName;
     this.birthday = birthday;
     this.email = email;
-    this.role = role;
+    this.roleId = roleId;
   }
 
   public String getId() {
@@ -66,17 +81,17 @@ public class Worker {
     this.email = email;
   }
 
-  public Role getRole() {
-    return role;
+  public String getRoleId() {
+    return roleId;
   }
 
-  public void setRole(Role role) {
-    this.role = role;
+  public void setRoleId(String roleId) {
+    this.roleId = roleId;
   }
 
   @Override
   public String toString() {
     return "Worker{" + "id='" + id + '\'' + ", name='" + name + '\'' + ", lastName='" + lastName + '\'' + ", birthday="
-      + birthday + ", email='" + email + '\'' + ", role=" + role + '}';
+      + birthday + ", email='" + email + '\'' + ", roleId=" + roleId + '}';
   }
 }
